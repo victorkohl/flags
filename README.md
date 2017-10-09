@@ -1,4 +1,4 @@
-# flags
+# Flags
 
 > A minesweeper flags game
 
