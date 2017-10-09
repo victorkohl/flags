@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const favicon = require('serve-favicon');
 const compress = require('compression');
@@ -18,6 +19,10 @@ const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 
+const authentication = require('./authentication');
+
+const mongoose = require('./mongoose');
+
 const app = feathers();
 
 // Load app configuration
@@ -34,11 +39,13 @@ app.use('/', feathers.static(app.get('public')));
 
 // Set up Plugins and providers
 app.configure(hooks());
+app.configure(mongoose);
 app.configure(rest());
 app.configure(socketio());
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
+app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Configure a middleware for 404s and the error handler

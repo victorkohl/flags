@@ -5,5 +5,54 @@
   "paginate": {
     "default": 10,
     "max": 50
-  }
+  },
+  "authentication": {
+    "secret": "AUTH_SECRET",
+    "strategies": ["jwt", "local"],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "type": "access"
+      },
+      "audience": "AUTH_JWT_AUDIENCE",
+      "subject": "anonymous",
+      "issuer": "flags",
+      "algorithm": "HS256",
+      "expiresIn": "AUTH_JWT_EXPIRES_IN"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    },
+    "google": {
+      "clientID": "AUTH_GOOGLE_CLIENT_ID",
+      "clientSecret": "AUTH_GOOGLE_CLIENT_SECRET",
+      "successRedirect": "/",
+      "scope": ["profile openid email"]
+    },
+    "facebook": {
+      "clientID": "AUTH_FACEBOOK_CLIENT_ID",
+      "clientSecret": "AUTH_FACEBOOK_CLIENT_SECRET",
+      "successRedirect": "/",
+      "scope": ["public_profile", "email"],
+      "profileFields": [
+        "id",
+        "displayName",
+        "first_name",
+        "last_name",
+        "email",
+        "gender",
+        "profileUrl",
+        "birthday",
+        "picture",
+        "permissions"
+      ]
+    },
+    "cookie": {
+      "enabled": false
+    }
+  },
+  "mongodb": "MONGO_URL"
 }
