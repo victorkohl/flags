@@ -17,5 +17,3 @@ module.exports = {
     }
   }
 };
-
-setInterval(() => console.log('waitingList', waitingList), 5000);

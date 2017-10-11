@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <script src="//unpkg.com/feathers-client@^2.0.0-pre.1/dist/feathers.js"></script>
+  <script src="//unpkg.com/feathers-client@^2/dist/feathers.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -21,13 +21,18 @@
 
     // Get the service for our `games` endpoint
     const games = client.service('games');
+    const queue = client.service('queue-positions');
 
     // Log when anyone creates a new message in real-time!
-    games.on('created', message =>
-      console.log(`New game from ${message}: ${message.text}`)
+    games.on('created', game =>
+      console.log('New game:', game)
     );
 
-    games.create({})
+    queue.on('created', res => {
+      console.log('Queue position:', res)
+    });
+
+    queue.create({ test: 1 });
   </script>
 </body>
 

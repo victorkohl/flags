@@ -1,11 +1,9 @@
-const waitingList = require('../../hooks/waiting-list');
-
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [waitingList()],
+    create: [],
     update: [],
     patch: [],
     remove: []
