@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="//unpkg.com/feathers-client@^2.0.0-pre.1/dist/feathers.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const client = feathers();
+    client.configure(feathers.hooks());
+
+    // Create the Feathers application with a `socketio` connection
+    client.configure(feathers.socketio(socket));
+
+    // Get the service for our `games` endpoint
+    const games = client.service('games');
+
+    // Log when anyone creates a new message in real-time!
+    games.on('created', message =>
+      console.log(`New game from ${message}: ${message.text}`)
+    );
+
+    games.create({})
+  </script>
+</body>
+
+</html>

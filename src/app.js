@@ -41,7 +41,14 @@ app.use('/', feathers.static(app.get('public')));
 app.configure(hooks());
 app.configure(mongoose);
 app.configure(rest());
-app.configure(socketio());
+app.configure(
+  socketio(io => {
+    io.use((socket, next) => {
+      socket.feathers.socket = socket;
+      next();
+    });
+  })
+);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);

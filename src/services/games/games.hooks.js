@@ -1,11 +1,11 @@
-const { authenticate } = require('feathers-authentication').hooks;
+const waitingList = require('../../hooks/waiting-list');
 
 module.exports = {
   before: {
-    all: [authenticate('jwt')],
+    all: [],
     find: [],
     get: [],
-    create: [],
+    create: [waitingList()],
     update: [],
     patch: [],
     remove: []

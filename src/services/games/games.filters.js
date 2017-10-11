@@ -1,4 +1,6 @@
 module.exports = function(data, connection, hook) {
-  // eslint-disable-line no-unused-vars
+  if (connection.socket.id !== hook.params.socket.id) {
+    return false;
+  }
   return data;
 };
