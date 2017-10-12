@@ -21,7 +21,7 @@
 
     // Get the service for our `games` endpoint
     const games = client.service('games');
-    const queue = client.service('queue-positions');
+    const queue = client.service('queues');
 
     // Log when anyone creates a new message in real-time!
     games.on('created', game =>

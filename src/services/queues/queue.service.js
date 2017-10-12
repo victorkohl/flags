@@ -1,12 +1,12 @@
-// Initializes the `queue-positions` service on path `/queue-positions`
+// Initializes the `queues` service on path `/queues`
 const Service = require('feathers-memory').Service;
-const hooks = require('./queue-positions.hooks');
-const filters = require('./queue-positions.filters');
+const hooks = require('./queues.hooks');
+const filters = require('./queues.filters');
 
 /**
- * Queue Positions service class.
+ * Queues service class.
  */
-class QueuePositions extends Service {
+class QueuesService extends Service {
   /**
    * Finds the first player in queue.
    * @param {object} query query object
@@ -29,15 +29,15 @@ module.exports = function() {
   const paginate = app.get('paginate');
 
   const options = {
-    name: 'queue-positions',
+    name: 'queues',
     paginate
   };
 
   // Initialize our service with any options it requires
-  app.use('/queue-positions', new QueuePositions(options));
+  app.use('/queues', new QueuesService(options));
 
   // Get our initialized service so that we can register hooks and filters
-  const service = app.service('queue-positions');
+  const service = app.service('queues');
 
   service.hooks(hooks);
 
