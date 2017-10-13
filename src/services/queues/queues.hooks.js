@@ -1,19 +1,23 @@
-// const waitListManager = require('../../wait-list-manager');
-
 const setSocketId = hook => {
   const { socket } = hook.params;
   hook.data = { socketId: socket.id };
+};
+
+const handleDisconnect = hook => {
+  const { socket } = hook.params;
   socket.on('disconnect', () => {
-    hook.service.remove(null, hook.data);
+    hook.service.remove(null, { socketId: socket.id });
   });
 };
 
 const checkMatch = async hook => {
-  const first = await hook.service.findFirst();
-  if (first) {
-    // to do: match
+  const [one, two] = await hook.service.shiftTwo();
+  if (one && two) {
+    hook.app.service('games').create({
+      players: { one: one.socketId, two: two.socketId },
+      currentTurn: one.socketId
+    });
   }
-  hook.result = { match: !!first };
 };
 
 module.exports = {
@@ -31,7 +35,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [checkMatch],
+    create: [handleDisconnect, checkMatch],
     update: [],
     patch: [],
     remove: []

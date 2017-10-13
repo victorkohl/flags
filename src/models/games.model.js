@@ -7,15 +7,15 @@ module.exports = function(app) {
   const { Schema } = mongooseClient;
   const games = new Schema({
     players: {
-      one: { type: Schema.Types.ObjectId, ref: 'users' },
-      two: { type: Schema.Types.ObjectId, ref: 'users' }
+      one: { type: String },
+      two: { type: String }
     },
     score: {
       one: { type: Number, default: 0 },
       two: { type: Number, default: 0 }
     },
-    currentTurn: { type: Schema.Types.ObjectId, ref: 'users' },
-    winner: { type: Schema.Types.ObjectId, ref: 'users' },
+    currentTurn: { type: String },
+    winner: { type: String },
     winReason: {
       type: String,
       enum: ['mostFlags', 'opponentLeft']

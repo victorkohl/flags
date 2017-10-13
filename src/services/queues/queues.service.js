@@ -8,19 +8,36 @@ const filters = require('./queues.filters');
  */
 class QueuesService extends Service {
   /**
-   * Finds the first player in queue.
+   * Shifts the first two players from the queue.
+   * @todo refactor using redis
    * @param {object} query query object
    * @return {Promise<Object|undefined>} the first player or undefined
    */
-  async findFirst() {
-    const results = await super.find({
-      $limit: 1,
+  async shiftTwo() {
+    const { data } = await super.find({
+      $limit: 2,
       $sort: {
         id: 1
       }
     });
 
-    return results.data[0];
+    const enoughPlayers = this._shiftPlayers(data);
+
+    return enoughPlayers ? data : [];
+  }
+
+  /**
+   * Shifts the first two players.
+   * @param {Array<Object>} data array of first two players on queue
+   * @return {Boolean}
+   */
+  _shiftPlayers(data) {
+    if (data.length === 2) {
+      super.remove(data[0].id);
+      super.remove(data[1].id);
+      return true;
+    }
+    return false;
   }
 }
 

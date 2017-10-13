@@ -9,7 +9,8 @@
 </head>
 
 <body>
-  <script src="//unpkg.com/feathers-client@^2/dist/feathers.js"></script>
+  <!-- <script src="//unpkg.com/feathers-client@^2/dist/feathers.js"></script> -->
+  <script src="/scripts/feathers.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
@@ -29,7 +30,7 @@
     );
 
     queue.on('created', res => {
-      console.log('Queue position:', res)
+      console.log('Queue:', res)
     });
 
     queue.create({ test: 1 });
